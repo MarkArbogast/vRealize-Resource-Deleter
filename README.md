@@ -36,9 +36,9 @@ or
 
 ## Usage
 
-    ```
-    java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
-    ```
+```
+java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+```
 
 There are three ways to specify the vRealize hostname, username, and password.
 
