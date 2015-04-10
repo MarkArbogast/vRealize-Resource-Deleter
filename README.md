@@ -7,7 +7,7 @@ Easily delete VMware vRealize resources.
 * JRE 1.7+ `java -version`
 * VMawre vRealize 6.0+
 * Administrator username and password for your VMware vRealize server
-* A box on the same network as your VMware vRealize server `ping vrealize_server`
+* A box with access to your VMware vRealize server `ping vrealize_server`
 
 ## Installation
 
