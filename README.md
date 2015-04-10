@@ -22,18 +22,28 @@ or
 
 ## Usage
 
-`java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]`
+```
+java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+```
 
 There are three ways to specify the vRealize hostname, username, and password.
 
-1. Provide them as arguments `java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]`
+1. Provide them as arguments 
+```
+java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+```
+
 2. Create a .suiteapi file in the current directory (or a parent directory) with this format:
 ```
 host=vrealize_host
 user=vrealize_username
 password=vrealize_password
 ```
-3. Simply run the jar and enter the parameters as prompted (recommended if you don't want password to be visible or stored anywhere) `java -jar vrealize-resource-deleter-1.0.0.jar`
+
+3. Simply run the jar and enter the parameters as prompted (recommended if you don't want password to be visible or stored anywhere)
+```
+java -jar vrealize-resource-deleter-1.0.0.jar
+```
 
 ## Contributing
 
