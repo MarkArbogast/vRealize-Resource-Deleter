@@ -18,19 +18,18 @@ ping vrealize_server
 ## Installation
 
 1. Download the jar TODO: add link
-
 2. Copy the jar to a box with access to your VMware vRealize server
 
 or
 
 1. Clone this repository 
 ```
-git clone https://github.com/MarkArbogast/vRealize-Resource-Deleter.git
+    git clone https://github.com/MarkArbogast/vRealize-Resource-Deleter.git
 ```
 
 2. Make the jar 
 ```
-rake build:jar
+    rake build:jar
 ```
 
 3. Copy the jar to a box with access to your VMware vRealize server `scp vrealize-resource-deleter-1.0.0.jar admin@network_box:~`
@@ -38,26 +37,26 @@ rake build:jar
 ## Usage
 
 ```
-java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+    java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
 ```
 
 There are three ways to specify the vRealize hostname, username, and password.
 
 1. Provide them as arguments 
 ```
-java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+    java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
 ```
 
 2. Create a .suiteapi file in the current directory (or a parent directory) with this format:
 ```
-host=vrealize_host
-user=vrealize_username
-password=vrealize_password
+    host=vrealize_host
+    user=vrealize_username
+    password=vrealize_password
 ```
 
 3. Simply run the jar and enter the parameters as prompted (recommended if you don't want password to be visible or stored anywhere)
 ```
-java -jar vrealize-resource-deleter-1.0.0.jar
+    java -jar vrealize-resource-deleter-1.0.0.jar
 ```
 
 ## Contributing
@@ -66,17 +65,17 @@ java -jar vrealize-resource-deleter-1.0.0.jar
 
 2. Create your feature branch: 
 ```
-git checkout -b my-new-feature
+    git checkout -b my-new-feature
 ```
 
 3. Commit your changes: 
 ```
-git commit -am 'Add some feature'
+    git commit -am 'Add some feature'
 ```
 
 4. Push to the branch: 
 ```
-git push origin my-new-feature
+    git push origin my-new-feature
 ```
 
 5. Submit a pull request :D
