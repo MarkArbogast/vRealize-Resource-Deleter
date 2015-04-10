@@ -4,20 +4,35 @@ Easily delete VMware vRealize resources.
 
 ## Requirements
 
-* JRE 1.7+ `java -version`
+* JRE 1.7+ 
+```
+java -version
+```
 * VMawre vRealize 6.0+
 * Administrator username and password for your VMware vRealize server
-* A box with access to your VMware vRealize server `ping vrealize_server`
+* A box with access to your VMware vRealize server 
+```
+ping vrealize_server
+```
 
 ## Installation
 
 1. Download the jar (link)
+
 2. Copy the jar to a box with access to your VMware vRealize server
 
 or
 
-1. Clone this repository `git clone https://github.com/MarkArbogast/vRealize-Resource-Deleter.git`
-2. Make the jar `rake build:jar`
+1. Clone this repository 
+```
+git clone https://github.com/MarkArbogast/vRealize-Resource-Deleter.git
+```
+
+2. Make the jar 
+```
+rake build:jar
+```
+
 3. Copy the jar to a box with access to your VMware vRealize server `scp vrealize-resource-deleter-1.0.0.jar admin@network_box:~`
 
 ## Usage
@@ -48,9 +63,22 @@ java -jar vrealize-resource-deleter-1.0.0.jar
 ## Contributing
 
 1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
+
+2. Create your feature branch: 
+```
+git checkout -b my-new-feature
+```
+
+3. Commit your changes: 
+```
+git commit -am 'Add some feature'
+```
+
+4. Push to the branch: 
+```
+git push origin my-new-feature
+```
+
 5. Submit a pull request :D
 
 ## History
