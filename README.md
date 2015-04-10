@@ -8,7 +8,7 @@ Easily delete VMware vRealize resources.
 ```
 java -version
 ```
-* VMawre vRealize 6.0+
+* VMware vRealize 6.0+
 * Administrator username and password for your VMware vRealize server
 * A box with access to your VMware vRealize server 
 ```
