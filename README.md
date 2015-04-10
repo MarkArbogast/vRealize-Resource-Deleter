@@ -17,7 +17,7 @@ ping vrealize_server
 
 ## Installation
 
-1. Download the jar (link)
+1. Download the jar TODO: add link
 
 2. Copy the jar to a box with access to your VMware vRealize server
 
