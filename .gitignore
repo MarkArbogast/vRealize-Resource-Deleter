@@ -10,3 +10,28 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# Project
+out
+build
+paks
+tmp
+Gemfile.lock
+prototypes
+
+# OSX
+.DS_Store
+
+# Intellij
+workspace.xml
+.idea/dictionaries/*.xml
+.idea/copyright/profiles_settings.xml
+.idea/uiDesigner.xml
+.idea/artifacts
+.idea/codeStyleSettings.xml
+.idea/vcs.xml
+
+# Eclipse (if you opened the project with it for exporting the structure to OmniGraffle)
+.classpath
+.project
+
