@@ -1,14 +1,15 @@
 package com.bluemedora.argument;
 
-import com.bluemedora.api.ApiConnectionInfoGatherer;
+import com.bluemedora.api.ApiConnectionInfoArguments;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
 import com.bluemedora.argument.exceptions.FlagNotFoundException;
 import com.bluemedora.argument.exceptions.UnknownArgumentException;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 
 public class ArgumentParserTest
 {
@@ -17,7 +18,7 @@ public class ArgumentParserTest
     @Before
     public void setTarget()
     {
-        this.target = new ArgumentParser(ApiConnectionInfoGatherer.API_CONNECTION_INFO_ARGUMENT_MAP);
+        this.target = new ArgumentParser(ApiConnectionInfoArguments.API_CONNECTION_INFO_ARGUMENT_MAP);
     }
 
     @Test
@@ -40,7 +41,7 @@ public class ArgumentParserTest
     @Test
     public void throwsArgumentMissingValueExceptionForArgumentMissingValue()
     {
-        for (String argumentMissingValue : ApiConnectionInfoGatherer.ARGUMENT_FLAGS) {
+        for (String argumentMissingValue : ApiConnectionInfoArguments.ARGUMENT_FLAGS) {
             String[] argumentsMissingValue = {argumentMissingValue};
             try {
                 target.parse(argumentsMissingValue);
@@ -58,11 +59,11 @@ public class ArgumentParserTest
     @Test
     public void throwsArgumentMissingValueExceptionForConsecutiveValidArgumentFlags()
     {
-        String[] consecutiveValidArgumentFlags = {ApiConnectionInfoGatherer.HOST_FLAG, ApiConnectionInfoGatherer.USERNAME_FLAG};
+        String[] consecutiveValidArgumentFlags = {ApiConnectionInfoArguments.HOST_FLAG, ApiConnectionInfoArguments.USERNAME_FLAG};
         try {
             target.parse(consecutiveValidArgumentFlags);
         } catch (ArgumentMissingValueException e) {
-            assert (e.getArgumentMissingValue().equals(ApiConnectionInfoGatherer.HOST_FLAG));
+            assert (e.getArgumentMissingValue().equals(ApiConnectionInfoArguments.HOST_FLAG));
             // test passes
             return;
         } catch (UnknownArgumentException e) {
@@ -89,7 +90,7 @@ public class ArgumentParserTest
         }
 
 
-        for (String argumentFlag : ApiConnectionInfoGatherer.ARGUMENT_FLAGS) {
+        for (String argumentFlag : ApiConnectionInfoArguments.ARGUMENT_FLAGS) {
             try {
                 argumentMap.get(argumentFlag);
             } catch (FlagNotFoundException e) {
@@ -106,7 +107,7 @@ public class ArgumentParserTest
         String host = "host";
         String username = "username";
         String password = "password";
-        String[] validArguments = {ApiConnectionInfoGatherer.HOST_FLAG, host, ApiConnectionInfoGatherer.USERNAME_FLAG, username, ApiConnectionInfoGatherer.PASSWORD_FLAG, password};
+        String[] validArguments = {ApiConnectionInfoArguments.HOST_FLAG, host, ApiConnectionInfoArguments.USERNAME_FLAG, username, ApiConnectionInfoArguments.PASSWORD_FLAG, password};
 
         ArgumentMap argumentMap;
 
@@ -121,9 +122,9 @@ public class ArgumentParserTest
         }
 
         try {
-            assertEquals(host, argumentMap.get(ApiConnectionInfoGatherer.HOST_FLAG));
-            assertEquals(username, argumentMap.get(ApiConnectionInfoGatherer.USERNAME_FLAG));
-            assertEquals(password, argumentMap.get(ApiConnectionInfoGatherer.PASSWORD_FLAG));
+            assertEquals(host, argumentMap.get(ApiConnectionInfoArguments.HOST_FLAG));
+            assertEquals(username, argumentMap.get(ApiConnectionInfoArguments.USERNAME_FLAG));
+            assertEquals(password, argumentMap.get(ApiConnectionInfoArguments.PASSWORD_FLAG));
         } catch (FlagNotFoundException e) {
             fail("ArgumentParser failed to parse host, username, or password even though all three were provided.");
         }
