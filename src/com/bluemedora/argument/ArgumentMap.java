@@ -29,6 +29,17 @@ public class ArgumentMap
         throw new FlagNotFoundException(flag);
     }
 
+    public String getValueOrEmptyString(String flag)
+    {
+        String value = this.argumentValueMap.get(flag);
+        if (value != null) {
+            System.out.println("Returning for flag <" + flag + ">: " + value);
+            return value;
+        }
+        System.out.println("Returning empty string for flag <" + flag + ">");
+        return "";
+    }
+
     public boolean hasFlag(String flag)
     {
         return argumentValueMap.containsKey(flag);

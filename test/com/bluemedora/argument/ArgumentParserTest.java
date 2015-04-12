@@ -22,7 +22,7 @@ public class ArgumentParserTest
     }
 
     @Test
-    public void throwsUnknownArgumentExceptionForUnknownArgument()
+    public void parse_throwsUnknownArgumentExceptionForUnknownArgument()
     {
         String unknownArgument = "unknownArgument";
         String[] unknownArguments = {unknownArgument};
@@ -39,7 +39,7 @@ public class ArgumentParserTest
     }
 
     @Test
-    public void throwsArgumentMissingValueExceptionForArgumentMissingValue()
+    public void parse_throwsArgumentMissingValueExceptionForArgumentMissingValue()
     {
         for (String argumentMissingValue : ApiConnectionInfoArguments.ARGUMENT_FLAGS) {
             String[] argumentsMissingValue = {argumentMissingValue};
@@ -57,7 +57,7 @@ public class ArgumentParserTest
     }
 
     @Test
-    public void throwsArgumentMissingValueExceptionForConsecutiveValidArgumentFlags()
+    public void parse_throwsArgumentMissingValueExceptionForConsecutiveValidArgumentFlags()
     {
         String[] consecutiveValidArgumentFlags = {ApiConnectionInfoArguments.HOST_FLAG, ApiConnectionInfoArguments.USERNAME_FLAG};
         try {
@@ -73,7 +73,7 @@ public class ArgumentParserTest
     }
 
     @Test
-    public void parsesNoArguments()
+    public void parse_parsesNoArguments()
     {
         String[] validArguments = {};
 
@@ -102,7 +102,7 @@ public class ArgumentParserTest
     }
 
     @Test
-    public void parsesValidArguments()
+    public void parse_parsesValidArguments()
     {
         String host = "host";
         String username = "username";

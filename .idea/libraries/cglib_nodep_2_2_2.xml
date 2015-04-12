@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="cglib-nodep-2.2.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/testlib/cglib-nodep-2.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/testlib/javassist-3.19.0-GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/testlib/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/testlib/mockito-all-1.10.19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/testlib/objenesis-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/testlib/powermock-mockito-1.6.2-full.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/testlib/mockito-all-1.10.19.jar!/" />
+      <root url="jar://$PROJECT_DIR$/testlib/powermock-mockito-1.6.2-full.jar!/" />
+    </SOURCES>
+  </library>
+</component>
