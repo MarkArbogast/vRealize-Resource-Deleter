@@ -32,12 +32,7 @@ public class ArgumentMap
     public String getValueOrEmptyString(String flag)
     {
         String value = this.argumentValueMap.get(flag);
-        if (value != null) {
-            System.out.println("Returning for flag <" + flag + ">: " + value);
-            return value;
-        }
-        System.out.println("Returning empty string for flag <" + flag + ">");
-        return "";
+        return value != null ? value : "";
     }
 
     public boolean hasFlag(String flag)
