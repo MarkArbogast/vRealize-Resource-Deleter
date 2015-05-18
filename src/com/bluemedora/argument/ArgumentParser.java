@@ -67,5 +67,4 @@ public class ArgumentParser
             throw new ArgumentMissingValueException();
         }
     }
-
 }
