@@ -13,6 +13,12 @@ public class ApiConnectionInfo
         this.password = password;
     }
 
+    public ApiConnectionInfo()
+    {
+        this.host = "";
+        this.username = "";
+        this.password = "";
+    }
 
     public String getHost()
     {
@@ -34,7 +40,8 @@ public class ApiConnectionInfo
         return !nullOrEmpty(this.host) && !nullOrEmpty(this.username) && !nullOrEmpty(this.password);
     }
 
-    public void merge(ApiConnectionInfo apiConnectionInfo)
+    // Prioritize existing values.
+    public void mergeNewValues(ApiConnectionInfo apiConnectionInfo)
     {
         if (nullOrEmpty(this.host)) {
             this.host = apiConnectionInfo.getHost();
