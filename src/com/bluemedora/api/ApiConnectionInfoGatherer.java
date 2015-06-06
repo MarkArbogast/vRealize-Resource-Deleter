@@ -4,6 +4,7 @@ import com.bluemedora.argument.ArgumentMap;
 import com.bluemedora.argument.ArgumentParser;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
 import com.bluemedora.argument.exceptions.UnknownArgumentException;
+import com.bluemedora.properties.SuiteApiProperties;
 
 import static com.bluemedora.api.ApiConnectionInfoArguments.*;
 
@@ -23,6 +24,15 @@ public class ApiConnectionInfoGatherer
         String host = parsedArgumentMap.getValueOrEmptyString(HOST_FLAG);
         String username = parsedArgumentMap.getValueOrEmptyString(USERNAME_FLAG);
         String password = parsedArgumentMap.getValueOrEmptyString(PASSWORD_FLAG);
+
+        return new ApiConnectionInfo(host, username, password);
+    }
+
+    public ApiConnectionInfo getApiConnectionInfoFromSuiteApiProperties(SuiteApiProperties suiteApiProperties)
+    {
+        String host = suiteApiProperties.getHost();
+        String username = suiteApiProperties.getUsername();
+        String password = suiteApiProperties.getPassword();
 
         return new ApiConnectionInfo(host, username, password);
     }

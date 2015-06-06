@@ -6,11 +6,17 @@ import com.bluemedora.argument.ArgumentMap;
 import com.bluemedora.argument.ArgumentParser;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
 import com.bluemedora.argument.exceptions.UnknownArgumentException;
+import com.bluemedora.properties.PropertiesFile;
+import com.bluemedora.properties.SuiteApiProperties;
+import com.bluemedora.properties.FileFinder;
+import com.bluemedora.properties.exceptions.FailedToFindSuiteApiPropertiesException;
 
 import static com.bluemedora.api.ApiConnectionInfoArguments.API_CONNECTION_INFO_ARGUMENT_MAP;
 
 public class Main
 {
+    private static final String SUITE_API_FILE = ".suiteapi";
+
     public static void main(String[] arguments)
     {
         ArgumentMap argumentMap = API_CONNECTION_INFO_ARGUMENT_MAP;
@@ -27,5 +33,22 @@ public class Main
             System.err.println("Argument missing value: " + e.getArgumentMissingValue());
             return;
         }
+
+        if (!apiConnectionInfo.hasAllInfo()) {
+            try {
+                String suiteApiPropertiesFilePath = FileFinder.findAbsolutePathInCurrentOrAncestorDirectory(SUITE_API_FILE);
+                PropertiesFile propertiesFile = new PropertiesFile(suiteApiPropertiesFilePath);
+                SuiteApiProperties suiteApiProperties = new SuiteApiProperties(propertiesFile);
+                apiConnectionInfo.merge(apiConnectionInfoGatherer.getApiConnectionInfoFromSuiteApiProperties(suiteApiProperties));
+            } catch (FailedToFindSuiteApiPropertiesException e) {
+                // no problem
+            }
+        }
+
+        if (!apiConnectionInfo.hasAllInfo()) {
+
+        }
+
+        System.out.println(apiConnectionInfo);
     }
 }
