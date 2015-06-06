@@ -38,7 +38,7 @@ public class SuiteApiPropertiesTest
             failDueToUnexpectedException(e, SuiteApiProperties.HOST);
         }
 
-        assertEquals(MOCK_VALUE, this.target.getHost());
+        assertEquals(MOCK_VALUE, this.target.getHostOrEmptyString());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class SuiteApiPropertiesTest
             failDueToUnexpectedException(e, SuiteApiProperties.HOST);
         }
 
-        assertEquals("", this.target.getHost());
+        assertEquals("", this.target.getHostOrEmptyString());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class SuiteApiPropertiesTest
             failDueToUnexpectedException(e, SuiteApiProperties.HOST);
         }
 
-        assertEquals("", this.target.getHost());
+        assertEquals("", this.target.getHostOrEmptyString());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class SuiteApiPropertiesTest
             failDueToUnexpectedException(e, SuiteApiProperties.HOST);
         }
 
-        assertEquals("", this.target.getHost());
+        assertEquals("", this.target.getHostOrEmptyString());
     }
 
     @Test
@@ -102,7 +102,7 @@ public class SuiteApiPropertiesTest
             failDueToUnexpectedException(e, SuiteApiProperties.USERNAME);
         }
 
-        assertEquals(MOCK_VALUE, this.target.getUsername());
+        assertEquals(MOCK_VALUE, this.target.getUsernameOrEmptyString());
     }
 
     @Test
@@ -118,7 +118,7 @@ public class SuiteApiPropertiesTest
             failDueToUnexpectedException(e, SuiteApiProperties.PASSWORD);
         }
 
-        assertEquals(MOCK_VALUE, this.target.getPassword());
+        assertEquals(MOCK_VALUE, this.target.getPasswordOrEmptyString());
     }
 
     private void failDueToUnexpectedException(Exception e, String property) {

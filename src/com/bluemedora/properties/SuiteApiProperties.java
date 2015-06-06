@@ -17,7 +17,7 @@ public class SuiteApiProperties
         this.propertiesFile = propertiesFile;
     }
 
-    public String getHost()
+    public String getHostOrEmptyString()
     {
         try {
             return this.propertiesFile.getProperty(HOST);
@@ -30,7 +30,7 @@ public class SuiteApiProperties
         }
     }
 
-    public String getUsername()
+    public String getUsernameOrEmptyString()
     {
         try {
             return this.propertiesFile.getProperty(USERNAME);
@@ -43,7 +43,7 @@ public class SuiteApiProperties
         }
     }
 
-    public String getPassword()
+    public String getPasswordOrEmptyString()
     {
         try {
             return this.propertiesFile.getProperty(PASSWORD);

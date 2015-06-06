@@ -30,9 +30,9 @@ public class ApiConnectionInfoGatherer
 
     public ApiConnectionInfo getApiConnectionInfoFromSuiteApiProperties(SuiteApiProperties suiteApiProperties)
     {
-        String host = suiteApiProperties.getHost();
-        String username = suiteApiProperties.getUsername();
-        String password = suiteApiProperties.getPassword();
+        String host = suiteApiProperties.getHostOrEmptyString();
+        String username = suiteApiProperties.getUsernameOrEmptyString();
+        String password = suiteApiProperties.getPasswordOrEmptyString();
 
         return new ApiConnectionInfo(host, username, password);
     }
