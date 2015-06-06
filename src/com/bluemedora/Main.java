@@ -2,10 +2,12 @@ package com.bluemedora;
 
 import com.bluemedora.api.ApiConnectionInfo;
 import com.bluemedora.api.ApiConnectionInfoGatherer;
+import com.bluemedora.api.Shell;
 import com.bluemedora.argument.ArgumentMap;
 import com.bluemedora.argument.ArgumentParser;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
 import com.bluemedora.argument.exceptions.UnknownArgumentException;
+import com.bluemedora.exceptions.ExitException;
 import com.bluemedora.properties.FileFinder;
 import com.bluemedora.properties.PropertiesFile;
 import com.bluemedora.properties.SuiteApiProperties;
@@ -19,40 +21,43 @@ public class Main
 
     public static void main(String[] arguments)
     {
-        ApiConnectionInfo apiConnectionInfo = gatherApiConnectionInfo(arguments);
-
-        if (!apiConnectionInfo.hasAllInfo()) {
-
+        ApiConnectionInfo apiConnectionInfo = null;
+        try {
+            apiConnectionInfo = gatherApiConnectionInfo(arguments);
+        } catch (ExitException e) {
+            System.err.println(e.getExitMessage());
+            System.err.println("Exiting.");
+            System.exit(0);
         }
 
         System.out.println(apiConnectionInfo);
     }
 
-    private static ApiConnectionInfo gatherApiConnectionInfo(String[] arguments)
+    private static ApiConnectionInfo gatherApiConnectionInfo(String[] arguments) throws ExitException
     {
         ArgumentMap argumentMap = API_CONNECTION_INFO_ARGUMENT_MAP;
         ArgumentParser argumentParser = new ArgumentParser(argumentMap);
         ApiConnectionInfoGatherer apiConnectionInfoGatherer = new ApiConnectionInfoGatherer(argumentParser);
+        Shell shell = new Shell();
 
         ApiConnectionInfo apiConnectionInfo = getApiConnectionInfoFromArguments(apiConnectionInfoGatherer, arguments);
         apiConnectionInfo.mergeNewValues(getApiConnectionInfoFromSuiteApiPropertiesFile(apiConnectionInfoGatherer));
-        apiConnectionInfo.mergeNewValues(getApiConnectionInfoFromUser());
+        apiConnectionInfo.mergeNewValues(apiConnectionInfoGatherer.getMissingApiConnectionInfoFromUser(apiConnectionInfo, shell));
 
         return apiConnectionInfo;
     }
 
-    private static ApiConnectionInfo getApiConnectionInfoFromArguments(ApiConnectionInfoGatherer apiConnectionInfoGatherer, String[] arguments)
+
+    private static ApiConnectionInfo getApiConnectionInfoFromArguments(ApiConnectionInfoGatherer apiConnectionInfoGatherer, String[] arguments) throws ExitException
     {
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo();
 
         try {
             apiConnectionInfo = apiConnectionInfoGatherer.getApiConnectionInfoFromArguments(arguments);
         } catch (UnknownArgumentException e) {
-            System.err.println("Unknown argument: " + e.getUnknownArgument());
-            System.exit(0);
+            throw new ExitException("Unknown argument: " + e.getUnknownArgument());
         } catch (ArgumentMissingValueException e) {
-            System.err.println("Argument missing value: " + e.getArgumentMissingValue());
-            System.exit(0);
+            throw new ExitException("Argument missing value: " + e.getArgumentMissingValue());
         }
 
         return apiConnectionInfo;
@@ -74,8 +79,4 @@ public class Main
         return apiConnectionInfo;
     }
 
-    private static ApiConnectionInfo getApiConnectionInfoFromUser()
-    {
-        return null;
-    }
 }

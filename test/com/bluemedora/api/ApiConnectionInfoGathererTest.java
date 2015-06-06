@@ -4,6 +4,7 @@ import com.bluemedora.argument.ArgumentMap;
 import com.bluemedora.argument.ArgumentParser;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
 import com.bluemedora.argument.exceptions.UnknownArgumentException;
+import com.bluemedora.exceptions.ExitException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,8 +22,10 @@ public class ApiConnectionInfoGathererTest
     private final static String[] MOCK_ARGUMENTS      = {};
 
     private ApiConnectionInfoGatherer target;
+    private ApiConnectionInfo         apiConnectionInfo;
     private ArgumentParser            mockArgumentParser;
     private ArgumentMap               mockArgumentMap;
+    private Shell                     mockShell;
 
     private UnknownArgumentException      mockUnknownArgumentException;
     private ArgumentMissingValueException mockArgumentMissingValueException;
@@ -32,6 +35,8 @@ public class ApiConnectionInfoGathererTest
     {
         this.mockArgumentMap = mock(ArgumentMap.class);
         this.mockArgumentParser = mock(ArgumentParser.class);
+        this.mockShell = mock(Shell.class);
+        this.apiConnectionInfo = mock(ApiConnectionInfo.class);
         this.mockUnknownArgumentException = mock(UnknownArgumentException.class);
         this.mockArgumentMissingValueException = mock(ArgumentMissingValueException.class);
         this.target = new ApiConnectionInfoGatherer(this.mockArgumentParser);
@@ -142,10 +147,33 @@ public class ApiConnectionInfoGathererTest
 
     }
 
+    @Test
+    public void getMissingApiConnectionInfoFromUser()
+    {
+        when(this.apiConnectionInfo.hasHost()).thenReturn(false);
+        when(this.apiConnectionInfo.hasUsername()).thenReturn(false);
+        when(this.apiConnectionInfo.hasPassword()).thenReturn(false);
+
+        ApiConnectionInfo result;
+        try {
+            when(this.mockShell.getHostFromUser()).thenReturn(MOCK_HOST_VALUE);
+            when(this.mockShell.getUsernameFromUser()).thenReturn(MOCK_USERNAME_VALUE);
+            when(this.mockShell.getPasswordFromUser()).thenReturn(MOCK_PASSWORD_VALUE);
+            result = this.target.getMissingApiConnectionInfoFromUser(this.apiConnectionInfo, this.mockShell);
+        } catch (ExitException e) {
+            fail("Unexpected ExitException when getting missing API connection info from user: " + e.getExitMessage());
+            return;
+        }
+
+        assertEquals(MOCK_HOST_VALUE, result.getHost());
+        assertEquals(MOCK_USERNAME_VALUE, result.getUsername());
+        assertEquals(MOCK_PASSWORD_VALUE, result.getPassword());
+    }
+
     private void tellMockArgumentParserToThrowMockUnknownArgumentException()
     {
         tellMockArgumentParserToThrowMockException(this.mockUnknownArgumentException);
-    }
+}
 
     private void tellMockArgumentParserToThrowMockArgumentMissingValueException()
     {

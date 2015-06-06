@@ -4,6 +4,7 @@ import com.bluemedora.argument.ArgumentMap;
 import com.bluemedora.argument.ArgumentParser;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
 import com.bluemedora.argument.exceptions.UnknownArgumentException;
+import com.bluemedora.exceptions.ExitException;
 import com.bluemedora.properties.SuiteApiProperties;
 
 import static com.bluemedora.api.ApiConnectionInfoArguments.*;
@@ -36,4 +37,24 @@ public class ApiConnectionInfoGatherer
 
         return new ApiConnectionInfo(host, username, password);
     }
+
+    public ApiConnectionInfo getMissingApiConnectionInfoFromUser(ApiConnectionInfo apiConnectionInfo, Shell shell) throws ExitException
+    {
+        ApiConnectionInfo newApiConnectionInfo = new ApiConnectionInfo();
+
+        if (!apiConnectionInfo.hasHost()) {
+            newApiConnectionInfo.setHost(shell.getHostFromUser());
+        }
+
+        if (!apiConnectionInfo.hasUsername()) {
+            newApiConnectionInfo.setUsername(shell.getUsernameFromUser());
+        }
+
+        if (!apiConnectionInfo.hasPassword()) {
+            newApiConnectionInfo.setPassword(shell.getPasswordFromUser());
+        }
+
+        return newApiConnectionInfo;
+    }
+
 }
