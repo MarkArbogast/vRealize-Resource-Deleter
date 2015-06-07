@@ -49,6 +49,9 @@ namespace :build do
       `mv #{jar_file} ..`
     end
     
+    puts
+    puts "*** SUCCESS ***"
+    puts "jar: #{jar_file}"
   end
 
 end
