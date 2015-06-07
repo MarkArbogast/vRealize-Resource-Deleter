@@ -7,10 +7,8 @@ define spec
 					read parameters from .suiteapi file in current directory or any parent directory
 					for any missing parameters
 						gather parameters from user
-				until test host passes
-					re-gather host parameter from user
-				until credentials pass
-					re-gather user and password parameters from user
+				unless host, username, and password pass
+					exit
 			until valid resource name or id provided
 				prompt user for name or id of resource to be deleted
 			if name conflict, for each resource with name
