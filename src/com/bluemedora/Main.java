@@ -21,7 +21,7 @@ public class Main
 
     public static void main(String[] arguments)
     {
-        ApiConnectionInfo apiConnectionInfo = null;
+        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo();
         try {
             apiConnectionInfo = gatherApiConnectionInfo(arguments);
         } catch (ExitException e) {
