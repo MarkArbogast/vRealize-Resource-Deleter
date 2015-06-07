@@ -3,6 +3,7 @@ package com.bluemedora;
 import com.bluemedora.api.ApiConnectionInfo;
 import com.bluemedora.api.ApiConnectionInfoGatherer;
 import com.bluemedora.api.Shell;
+import com.bluemedora.api.SuiteApi;
 import com.bluemedora.argument.ArgumentMap;
 import com.bluemedora.argument.ArgumentParser;
 import com.bluemedora.argument.exceptions.ArgumentMissingValueException;
@@ -24,13 +25,15 @@ public class Main
         ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo();
         try {
             apiConnectionInfo = gatherApiConnectionInfo(arguments);
+            System.out.println("Testing vRealize Suite API connection...");
+            SuiteApi.testApiConnectionInfo(apiConnectionInfo);
         } catch (ExitException e) {
             System.err.println(e.getExitMessage());
             System.err.println("Exiting.");
             System.exit(0);
         }
 
-        System.out.println(apiConnectionInfo);
+        System.out.println("\nConnection successful.\n");
     }
 
     private static ApiConnectionInfo gatherApiConnectionInfo(String[] arguments) throws ExitException
@@ -46,7 +49,6 @@ public class Main
 
         return apiConnectionInfo;
     }
-
 
     private static ApiConnectionInfo getApiConnectionInfoFromArguments(ApiConnectionInfoGatherer apiConnectionInfoGatherer, String[] arguments) throws ExitException
     {
@@ -78,5 +80,4 @@ public class Main
 
         return apiConnectionInfo;
     }
-
 }
