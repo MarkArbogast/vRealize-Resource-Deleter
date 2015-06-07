@@ -18,6 +18,7 @@ paks
 tmp
 Gemfile.lock
 prototypes
+.suiteapi
 
 # OSX
 .DS_Store
