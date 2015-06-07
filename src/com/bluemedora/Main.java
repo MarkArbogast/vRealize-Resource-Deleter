@@ -50,7 +50,7 @@ public class Main
 
     private static ApiConnectionInfo getApiConnectionInfoFromArguments(ApiConnectionInfoGatherer apiConnectionInfoGatherer, String[] arguments) throws ExitException
     {
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo();
+        ApiConnectionInfo apiConnectionInfo;
 
         try {
             apiConnectionInfo = apiConnectionInfoGatherer.getApiConnectionInfoFromArguments(arguments);
