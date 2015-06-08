@@ -22,6 +22,11 @@ public class Shell
         return String.valueOf(getConsole().readPassword("Enter password: "));
     }
 
+    public String getResourceToDeleteFromUser() throws ExitException
+    {
+        return getFieldFromUser("name or ID of resource to delete");
+    }
+
     private String getFieldFromUser(String field) throws ExitException
     {
         String fieldResponse = "";

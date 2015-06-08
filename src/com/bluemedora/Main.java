@@ -27,6 +27,7 @@ public class Main
             apiConnectionInfo = gatherApiConnectionInfo(arguments);
             System.out.println("Testing vRealize Suite API connection...");
             SuiteApi.testApiConnectionInfo(apiConnectionInfo);
+            String resourceToDelete =  getResourceToDelete();
         } catch (ExitException e) {
             System.err.println(e.getExitMessage());
             System.err.println("Exiting.");
@@ -34,6 +35,12 @@ public class Main
         }
 
         System.out.println("\nConnection successful.\n");
+    }
+
+    private static String getResourceToDelete() throws ExitException
+    {
+        Shell shell = new Shell();
+        return shell.getResourceToDeleteFromUser();
     }
 
     private static ApiConnectionInfo gatherApiConnectionInfo(String[] arguments) throws ExitException
