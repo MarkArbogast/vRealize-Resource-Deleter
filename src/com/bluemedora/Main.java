@@ -19,6 +19,7 @@ import static com.bluemedora.api.ApiConnectionInfoArguments.API_CONNECTION_INFO_
 public class Main
 {
     private static final String SUITE_API_FILE = ".suiteapi";
+    private static final Shell shell = new Shell();
 
     public static void main(String[] arguments)
     {
@@ -39,7 +40,6 @@ public class Main
 
     private static String getResourceToDelete() throws ExitException
     {
-        Shell shell = new Shell();
         return shell.getResourceToDeleteFromUser();
     }
 
@@ -48,7 +48,6 @@ public class Main
         ArgumentMap argumentMap = API_CONNECTION_INFO_ARGUMENT_MAP;
         ArgumentParser argumentParser = new ArgumentParser(argumentMap);
         ApiConnectionInfoGatherer apiConnectionInfoGatherer = new ApiConnectionInfoGatherer(argumentParser);
-        Shell shell = new Shell();
 
         ApiConnectionInfo apiConnectionInfo = getApiConnectionInfoFromArguments(apiConnectionInfoGatherer, arguments);
         apiConnectionInfo.mergeNewValues(getApiConnectionInfoFromSuiteApiPropertiesFile(apiConnectionInfoGatherer));
