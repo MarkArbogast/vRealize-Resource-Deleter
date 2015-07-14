@@ -26,7 +26,7 @@ public class ArgumentMap
         if (this.argumentValueMap.containsKey(flag)) {
             return this.argumentValueMap.get(flag);
         }
-        throw new FlagNotFoundException(flag);
+        throw new FlagNotFoundException();
     }
 
     public String getValueOrEmptyString(String flag)

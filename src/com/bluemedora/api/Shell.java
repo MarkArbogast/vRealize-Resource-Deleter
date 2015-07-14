@@ -12,26 +12,11 @@ public class Shell
         return getFieldFromUser(SuiteApiProperties.HOST);
     }
 
-    public String getUsernameFromUser() throws ExitException
-    {
-        return getFieldFromUser(SuiteApiProperties.USERNAME);
-    }
-
-    public String getPasswordFromUser() throws ExitException
-    {
-        return String.valueOf(getConsole().readPassword("Enter password: "));
-    }
-
-    public String getResourceToDeleteFromUser() throws ExitException
-    {
-        return getFieldFromUser("name or ID of resource to delete");
-    }
-
     private String getFieldFromUser(String field) throws ExitException
     {
         String fieldResponse = "";
 
-        while(fieldResponse.isEmpty()) {
+        while (fieldResponse.isEmpty()) {
             fieldResponse = getConsole().readLine("Enter " + field + ": ");
         }
 
@@ -47,6 +32,21 @@ public class Shell
         }
 
         return console;
+    }
+
+    public String getUsernameFromUser() throws ExitException
+    {
+        return getFieldFromUser(SuiteApiProperties.USERNAME);
+    }
+
+    public String getPasswordFromUser() throws ExitException
+    {
+        return String.valueOf(getConsole().readPassword("Enter password: "));
+    }
+
+    public String getResourceToDeleteFromUser() throws ExitException
+    {
+        return getFieldFromUser("name or ID of resource to delete");
     }
 
 }

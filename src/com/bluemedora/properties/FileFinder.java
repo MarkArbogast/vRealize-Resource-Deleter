@@ -6,7 +6,9 @@ import java.io.File;
 
 public class FileFinder
 {
-    private FileFinder(){}
+    private FileFinder()
+    {
+    }
 
     public static String findAbsolutePathInCurrentOrAncestorDirectory(String filename) throws FailedToFindSuiteApiPropertiesException
     {

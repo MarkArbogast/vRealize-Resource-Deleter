@@ -50,6 +50,15 @@ public class PropertiesFile
 
     }
 
+    private void closeFileInputStream(PropertiesFileInputStream fileInputStream) throws FailedToClosePropertiesFileException
+    {
+        try {
+            fileInputStream.close();
+        } catch (IOException e) {
+            throw new FailedToClosePropertiesFileException(fileInputStream.getPath());
+        }
+    }
+
     private Properties getPropertiesFromFileInputStream(PropertiesFileInputStream fileInputStream) throws FailedToLoadPropertiesFileException, FailedToClosePropertiesFileException
     {
         Properties properties = new Properties();
@@ -63,14 +72,5 @@ public class PropertiesFile
         }
 
         return properties;
-    }
-
-    private void closeFileInputStream(PropertiesFileInputStream fileInputStream) throws FailedToClosePropertiesFileException
-    {
-        try {
-            fileInputStream.close();
-        } catch (IOException e) {
-            throw new FailedToClosePropertiesFileException(fileInputStream.getPath());
-        }
     }
 }

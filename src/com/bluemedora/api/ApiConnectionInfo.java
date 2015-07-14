@@ -20,34 +20,9 @@ public class ApiConnectionInfo
         this.password = "";
     }
 
-    public String getHost()
+    public boolean hasAllInfo()
     {
-        return this.host;
-    }
-
-    public String getUsername()
-    {
-        return this.username;
-    }
-
-    public String getPassword()
-    {
-        return this.password;
-    }
-
-    public void setHost(String host)
-    {
-        this.host = host;
-    }
-
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
+        return hasHost() && hasUsername() && hasPassword();
     }
 
     public boolean hasHost()
@@ -65,9 +40,9 @@ public class ApiConnectionInfo
         return !nullOrEmpty(this.password);
     }
 
-    public boolean hasAllInfo()
+    private boolean nullOrEmpty(String info)
     {
-        return hasHost() && hasUsername() && hasPassword();
+        return info == null || info.isEmpty();
     }
 
     // Prioritize existing values.
@@ -86,9 +61,34 @@ public class ApiConnectionInfo
         }
     }
 
-    private boolean nullOrEmpty(String info)
+    public String getHost()
     {
-        return info == null || info.isEmpty();
+        return this.host;
+    }
+
+    public String getUsername()
+    {
+        return this.username;
+    }
+
+    public String getPassword()
+    {
+        return this.password;
+    }
+
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    public void setHost(String host)
+    {
+        this.host = host;
     }
 
     @Override

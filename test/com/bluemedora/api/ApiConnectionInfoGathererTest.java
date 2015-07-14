@@ -53,41 +53,29 @@ public class ApiConnectionInfoGathererTest
 
         ApiConnectionInfo result = getApiConnectionInfoFromArgumentsWithoutException();
 
-        assertEquals(MOCK_HOST_VALUE, result.getHost());
-        assertEquals(MOCK_USERNAME_VALUE, result.getUsername());
-        assertEquals(MOCK_PASSWORD_VALUE, result.getPassword());
+        if (result != null) {
+            assertEquals(MOCK_HOST_VALUE, result.getHost());
+            assertEquals(MOCK_USERNAME_VALUE, result.getUsername());
+            assertEquals(MOCK_PASSWORD_VALUE, result.getPassword());
+        } else {
+            fail("Unexpected null result");
+        }
     }
 
-
-    @Test
-    public void getApiConnectionInfoFromArguments_handlesValuesForOneArgument()
+    private void tellMockArgumentParserToReturnMockArgumentMap()
     {
-        tellMockArgumentParserToReturnMockArgumentMap();
-        tellMockMapToReturnMockValueForFlag(HOST_FLAG, MOCK_HOST_VALUE);
-        tellMockMapToReturnMockValueForFlag(USERNAME_FLAG, "");
-        tellMockMapToReturnMockValueForFlag(PASSWORD_FLAG, "");
-
-        ApiConnectionInfo result = getApiConnectionInfoFromArgumentsWithoutException();
-
-        assertEquals(MOCK_HOST_VALUE, result.getHost());
-        assertEquals("", result.getUsername());
-        assertEquals("", result.getPassword());
+        try {
+            when(this.mockArgumentParser.parse(MOCK_ARGUMENTS)).thenReturn(this.mockArgumentMap);
+        } catch (UnknownArgumentException e) {
+            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
+        } catch (ArgumentMissingValueException e) {
+            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
+        }
     }
 
-
-    @Test
-    public void getApiConnectionInfoFromArguments_handlesValuesForTwoArguments()
+    private void tellMockMapToReturnMockValueForFlag(String flag, String value)
     {
-        tellMockArgumentParserToReturnMockArgumentMap();
-        tellMockMapToReturnMockValueForFlag(HOST_FLAG, MOCK_HOST_VALUE);
-        tellMockMapToReturnMockValueForFlag(USERNAME_FLAG, MOCK_USERNAME_VALUE);
-        tellMockMapToReturnMockValueForFlag(PASSWORD_FLAG, "");
-
-        ApiConnectionInfo result = getApiConnectionInfoFromArgumentsWithoutException();
-
-        assertEquals(MOCK_HOST_VALUE, result.getHost());
-        assertEquals(MOCK_USERNAME_VALUE, result.getUsername());
-        assertEquals("", result.getPassword());
+        when(this.mockArgumentMap.getValueOrEmptyString(flag)).thenReturn(value);
     }
 
     private ApiConnectionInfo getApiConnectionInfoFromArgumentsWithoutException()
@@ -104,6 +92,44 @@ public class ApiConnectionInfoGathererTest
         return null;
     }
 
+    private void failDueToUnexpectedExceptionWhileSettingUpMockBehavior(Exception e)
+    {
+        fail("Unexpected " + e.getClass() + " while setting up mock behavior.");
+    }
+
+    @Test
+    public void getApiConnectionInfoFromArguments_handlesValuesForOneArgument()
+    {
+        tellMockArgumentParserToReturnMockArgumentMap();
+        tellMockMapToReturnMockValueForFlag(HOST_FLAG, MOCK_HOST_VALUE);
+        tellMockMapToReturnMockValueForFlag(USERNAME_FLAG, "");
+        tellMockMapToReturnMockValueForFlag(PASSWORD_FLAG, "");
+
+        ApiConnectionInfo result = getApiConnectionInfoFromArgumentsWithoutException();
+
+        if (result != null) {
+            assertEquals(MOCK_HOST_VALUE, result.getHost());
+            assertEquals("", result.getUsername());
+            assertEquals("", result.getPassword());
+        }
+    }
+
+    @Test
+    public void getApiConnectionInfoFromArguments_handlesValuesForTwoArguments()
+    {
+        tellMockArgumentParserToReturnMockArgumentMap();
+        tellMockMapToReturnMockValueForFlag(HOST_FLAG, MOCK_HOST_VALUE);
+        tellMockMapToReturnMockValueForFlag(USERNAME_FLAG, MOCK_USERNAME_VALUE);
+        tellMockMapToReturnMockValueForFlag(PASSWORD_FLAG, "");
+
+        ApiConnectionInfo result = getApiConnectionInfoFromArgumentsWithoutException();
+
+        if (result != null) {
+            assertEquals(MOCK_HOST_VALUE, result.getHost());
+            assertEquals(MOCK_USERNAME_VALUE, result.getUsername());
+            assertEquals("", result.getPassword());
+        }
+    }
 
     @Test
     public void getApiConnectionInfoFromArguments_handlesUnknownArgumentException()
@@ -124,6 +150,22 @@ public class ApiConnectionInfoGathererTest
 
         fail("ApiConnectionInfoGatherer did not throw an UnknownArgumentException when it should have.");
 
+    }
+
+    private void tellMockArgumentParserToThrowMockUnknownArgumentException()
+    {
+        tellMockArgumentParserToThrowMockException(this.mockUnknownArgumentException);
+    }
+
+    private void tellMockArgumentParserToThrowMockException(Exception mockException)
+    {
+        try {
+            when(this.mockArgumentParser.parse(MOCK_ARGUMENTS)).thenThrow(mockException);
+        } catch (UnknownArgumentException e) {
+            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
+        } catch (ArgumentMissingValueException e) {
+            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
+        }
     }
 
     @Test
@@ -147,6 +189,11 @@ public class ApiConnectionInfoGathererTest
 
     }
 
+    private void tellMockArgumentParserToThrowMockArgumentMissingValueException()
+    {
+        tellMockArgumentParserToThrowMockException(this.mockArgumentMissingValueException);
+    }
+
     @Test
     public void getMissingApiConnectionInfoFromUser()
     {
@@ -168,47 +215,5 @@ public class ApiConnectionInfoGathererTest
         assertEquals(MOCK_HOST_VALUE, result.getHost());
         assertEquals(MOCK_USERNAME_VALUE, result.getUsername());
         assertEquals(MOCK_PASSWORD_VALUE, result.getPassword());
-    }
-
-    private void tellMockArgumentParserToThrowMockUnknownArgumentException()
-    {
-        tellMockArgumentParserToThrowMockException(this.mockUnknownArgumentException);
-}
-
-    private void tellMockArgumentParserToThrowMockArgumentMissingValueException()
-    {
-        tellMockArgumentParserToThrowMockException(this.mockArgumentMissingValueException);
-    }
-
-    private void tellMockArgumentParserToThrowMockException(Exception mockException)
-    {
-        try {
-            when(this.mockArgumentParser.parse(MOCK_ARGUMENTS)).thenThrow(mockException);
-        } catch (UnknownArgumentException e) {
-            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
-        } catch (ArgumentMissingValueException e) {
-            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
-        }
-    }
-
-    private void tellMockArgumentParserToReturnMockArgumentMap()
-    {
-        try {
-            when(this.mockArgumentParser.parse(MOCK_ARGUMENTS)).thenReturn(this.mockArgumentMap);
-        } catch (UnknownArgumentException e) {
-            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
-        } catch (ArgumentMissingValueException e) {
-            failDueToUnexpectedExceptionWhileSettingUpMockBehavior(e);
-        }
-    }
-
-    private void tellMockMapToReturnMockValueForFlag(String flag, String value)
-    {
-        when(this.mockArgumentMap.getValueOrEmptyString(flag)).thenReturn(value);
-    }
-
-    private void failDueToUnexpectedExceptionWhileSettingUpMockBehavior(Exception e)
-    {
-        fail("Unexpected " + e.getClass() + " while setting up mock behavior.");
     }
 }

@@ -19,16 +19,16 @@ import static com.bluemedora.api.ApiConnectionInfoArguments.API_CONNECTION_INFO_
 public class Main
 {
     private static final String SUITE_API_FILE = ".suiteapi";
-    private static final Shell shell = new Shell();
+    private static final Shell  shell          = new Shell();
 
     public static void main(String[] arguments)
     {
-        ApiConnectionInfo apiConnectionInfo = new ApiConnectionInfo();
+        ApiConnectionInfo apiConnectionInfo;
         try {
             apiConnectionInfo = gatherApiConnectionInfo(arguments);
             System.out.println("Testing vRealize Suite API connection...");
             SuiteApi.testApiConnectionInfo(apiConnectionInfo);
-            String resourceToDelete =  getResourceToDelete();
+            String resourceToDelete = getResourceToDelete();
         } catch (ExitException e) {
             System.err.println(e.getExitMessage());
             System.err.println("Exiting.");

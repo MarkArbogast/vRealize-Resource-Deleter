@@ -13,10 +13,9 @@ import static org.powermock.api.mockito.PowerMockito.when;
 
 public class SuiteApiPropertiesTest
 {
+    private static final String MOCK_VALUE = "mockValue";
     private SuiteApiProperties target;
     private PropertiesFile     mockPropertiesFile;
-
-    private static final String MOCK_VALUE    = "mockValue";
 
     @Before
     public void setUp()
@@ -39,6 +38,11 @@ public class SuiteApiPropertiesTest
         }
 
         assertEquals(MOCK_VALUE, this.target.getHostOrEmptyString());
+    }
+
+    private void failDueToUnexpectedException(Exception e, String property)
+    {
+        fail("Unexpected " + e.getClass() + " when getting " + property);
     }
 
     @Test
@@ -119,10 +123,6 @@ public class SuiteApiPropertiesTest
         }
 
         assertEquals(MOCK_VALUE, this.target.getPasswordOrEmptyString());
-    }
-
-    private void failDueToUnexpectedException(Exception e, String property) {
-        fail("Unexpected " + e.getClass() + " when getting " + property);
     }
 }
 
