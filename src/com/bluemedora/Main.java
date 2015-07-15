@@ -13,6 +13,9 @@ import com.bluemedora.properties.FileFinder;
 import com.bluemedora.properties.PropertiesFile;
 import com.bluemedora.properties.SuiteApiProperties;
 import com.bluemedora.properties.exceptions.FailedToFindSuiteApiPropertiesException;
+import com.vmware.ops.api.model.resource.ResourceDto;
+
+import java.util.List;
 
 import static com.bluemedora.api.ApiConnectionInfoArguments.API_CONNECTION_INFO_ARGUMENT_MAP;
 
@@ -26,21 +29,21 @@ public class Main
         ApiConnectionInfo apiConnectionInfo;
         try {
             apiConnectionInfo = gatherApiConnectionInfo(arguments);
-            System.out.println("Testing vRealize Suite API connection...");
+
             SuiteApi.testApiConnectionInfo(apiConnectionInfo);
-            String resourceToDelete = getResourceToDelete();
+
+            String resourceToDelete = shell.getResourceToDeleteFromUser();
+
+            List<ResourceDto> matchingResources = SuiteApi.getMatchingResources(apiConnectionInfo, resourceToDelete);
+
+            ResourceDto resourceDtoToDelete = getResourceToDeleteFromList(matchingResources);
+
+            SuiteApi.deleteResource(apiConnectionInfo, resourceDtoToDelete);
         } catch (ExitException e) {
             System.err.println(e.getExitMessage());
             System.err.println("Exiting.");
             System.exit(0);
         }
-
-        System.out.println("\nConnection successful.\n");
-    }
-
-    private static String getResourceToDelete() throws ExitException
-    {
-        return shell.getResourceToDeleteFromUser();
     }
 
     private static ApiConnectionInfo gatherApiConnectionInfo(String[] arguments) throws ExitException
@@ -54,6 +57,18 @@ public class Main
         apiConnectionInfo.mergeNewValues(apiConnectionInfoGatherer.getMissingApiConnectionInfoFromUser(apiConnectionInfo, shell));
 
         return apiConnectionInfo;
+    }
+
+    private static ResourceDto getResourceToDeleteFromList(List<ResourceDto> matchingResources) throws ExitException
+    {
+        ResourceDto resourceDtoToDelete;
+        if (matchingResources.size() > 1) {
+            int index = shell.getIndexFromUser(matchingResources);
+            resourceDtoToDelete = matchingResources.get(index);
+        } else {
+            resourceDtoToDelete = matchingResources.get(0);
+        }
+        return resourceDtoToDelete;
     }
 
     private static ApiConnectionInfo getApiConnectionInfoFromArguments(ApiConnectionInfoGatherer apiConnectionInfoGatherer, String[] arguments) throws ExitException

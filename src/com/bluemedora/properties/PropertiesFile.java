@@ -32,7 +32,7 @@ public class PropertiesFile
         try {
             return new PropertiesFileInputStream(path);
         } catch (IOException e) {
-            throw new FailedToLoadPropertiesFileException(path);
+            throw new FailedToLoadPropertiesFileException();
         }
     }
 
@@ -43,7 +43,7 @@ public class PropertiesFile
         String propertyValue = properties.getProperty(property);
 
         if (propertyValue == null) {
-            throw new PropertyNotFoundException(property);
+            throw new PropertyNotFoundException();
         }
 
         return propertyValue;
@@ -55,7 +55,7 @@ public class PropertiesFile
         try {
             fileInputStream.close();
         } catch (IOException e) {
-            throw new FailedToClosePropertiesFileException(fileInputStream.getPath());
+            throw new FailedToClosePropertiesFileException();
         }
     }
 
@@ -66,7 +66,7 @@ public class PropertiesFile
         try {
             properties.load(fileInputStream);
         } catch (IOException e) {
-            throw new FailedToLoadPropertiesFileException(fileInputStream.getPath());
+            throw new FailedToLoadPropertiesFileException();
         } finally {
             closeFileInputStream(fileInputStream);
         }
