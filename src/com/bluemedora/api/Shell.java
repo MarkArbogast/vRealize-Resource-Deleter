@@ -85,19 +85,19 @@ public class Shell
         }
     }
 
-    public boolean getDeleteChildrenFromUser() throws ExitException
+    public boolean getDeleteDescendantsFromUser() throws ExitException
     {
-        Boolean deleteChildren = null;
+        Boolean deleteDescendants = null;
 
-        while (deleteChildren == null) {
-            String response = getConsole().readLine("Delete children (y/n)? ");
+        while (deleteDescendants == null) {
+            String response = getConsole().readLine("Delete descendants (y/n)? ");
             if ("y".equals(response)) {
-                deleteChildren = true;
+                deleteDescendants = true;
             } else if ("n".equals(response)) {
-                deleteChildren = false;
+                deleteDescendants = false;
             }
         }
 
-        return deleteChildren;
+        return deleteDescendants;
     }
 }

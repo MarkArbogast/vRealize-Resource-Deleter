@@ -4,7 +4,6 @@ import com.bluemedora.exceptions.ExitException;
 import com.vmware.ops.api.client.Client;
 import com.vmware.ops.api.client.exceptions.AuthException;
 import com.vmware.ops.api.model.common.PageInfo;
-import com.vmware.ops.api.model.common.types.RelationshipType;
 import com.vmware.ops.api.model.resource.ResourceDto;
 import com.vmware.ops.api.model.resource.ResourceQuery;
 
@@ -70,7 +69,7 @@ public class SuiteApi
         return matchingResources;
     }
 
-    public static List<ResourceDto> getChildren(ApiConnectionInfo apiConnectionInfo, ResourceDto resourceDtoToDelete)
+    public static void recursivelyDeleteDescendants(ApiConnectionInfo apiConnectionInfo, ResourceDto resourceDtoToDelete) throws ExitException
     {
         Client client = getClient(apiConnectionInfo.getHost(), apiConnectionInfo.getUsername(), apiConnectionInfo.getPassword());
 
@@ -78,12 +77,17 @@ public class SuiteApi
         ResourceDto.ResourceRelationDto resourceDtoToDeleteDescendants;
         List<ResourceDto> children = new ArrayList<ResourceDto>();
         do {
-            resourceDtoToDeleteDescendants = client.resourcesClient().getRelationships(resourceDtoToDelete.getIdentifier(), RelationshipType.DESCENDANT, new PageInfo());
+
+            resourceDtoToDeleteDescendants = client.resourcesClient().getChildren(resourceDtoToDelete.getIdentifier(), pageInfo);
             children.addAll(resourceDtoToDeleteDescendants.getResourceList());
             pageInfo.setPage(pageInfo.getPage() + 1);
         } while (resourceDtoToDeleteDescendants.getResourceList().size() == 5000);
 
-        return children;
+        for (ResourceDto child : children) {
+            recursivelyDeleteDescendants(apiConnectionInfo, child);
+        }
+
+        deleteResource(apiConnectionInfo, resourceDtoToDelete);
     }
 }
 

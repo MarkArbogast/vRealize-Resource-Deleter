@@ -14,6 +14,8 @@ import com.bluemedora.properties.PropertiesFile;
 import com.bluemedora.properties.SuiteApiProperties;
 import com.bluemedora.properties.exceptions.FailedToFindSuiteApiPropertiesException;
 import com.vmware.ops.api.model.resource.ResourceDto;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class Main
 
     public static void main(String[] arguments)
     {
+        // Disable annoying certificate warnings from vmware's suite api lib
+        Logger.getLogger("com.vmware.ops.api.client.HttpClientFactory").setLevel(Level.OFF);
+
         ApiConnectionInfo apiConnectionInfo;
         try {
             apiConnectionInfo = gatherApiConnectionInfo(arguments);
@@ -38,13 +43,11 @@ public class Main
 
             ResourceDto resourceDtoToDelete = getResourceToDeleteFromList(matchingResources);
 
-            boolean deleteChildren = shell.getDeleteChildrenFromUser();
+            boolean deleteDescendants = shell.getDeleteDescendantsFromUser();
 
-            if (deleteChildren) {
-                List<ResourceDto> childrenOfResourceDtoToDelete = SuiteApi.getChildren(apiConnectionInfo, resourceDtoToDelete);
-                for (ResourceDto child : childrenOfResourceDtoToDelete) {
-                    SuiteApi.deleteResource(apiConnectionInfo, child);
-                }
+            if (deleteDescendants) {
+                System.out.println("Deleting descendants...");
+                SuiteApi.recursivelyDeleteDescendants(apiConnectionInfo, resourceDtoToDelete);
             }
 
             SuiteApi.deleteResource(apiConnectionInfo, resourceDtoToDelete);
