@@ -48,9 +48,9 @@ public class Main
             if (deleteDescendants) {
                 System.out.println("Deleting descendants...");
                 SuiteApi.recursivelyDeleteDescendants(apiConnectionInfo, resourceDtoToDelete);
+            } else {
+                SuiteApi.deleteResource(apiConnectionInfo, resourceDtoToDelete);
             }
-
-            SuiteApi.deleteResource(apiConnectionInfo, resourceDtoToDelete);
         } catch (ExitException e) {
             System.err.println(e.getExitMessage());
             System.err.println("Exiting.");
