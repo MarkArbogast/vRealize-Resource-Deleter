@@ -38,6 +38,15 @@ public class Main
 
             ResourceDto resourceDtoToDelete = getResourceToDeleteFromList(matchingResources);
 
+            boolean deleteChildren = shell.getDeleteChildrenFromUser();
+
+            if (deleteChildren) {
+                List<ResourceDto> childrenOfResourceDtoToDelete = SuiteApi.getChildren(apiConnectionInfo, resourceDtoToDelete);
+                for (ResourceDto child : childrenOfResourceDtoToDelete) {
+                    SuiteApi.deleteResource(apiConnectionInfo, child);
+                }
+            }
+
             SuiteApi.deleteResource(apiConnectionInfo, resourceDtoToDelete);
         } catch (ExitException e) {
             System.err.println(e.getExitMessage());

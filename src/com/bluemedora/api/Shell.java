@@ -67,7 +67,7 @@ public class Shell
     {
         int index;
         while(true) {
-            String indexString = getFieldFromUser("the index (0-" + max + ") of the resource would you like to delete:");
+            String indexString = getFieldFromUser("the index (0-" + max + ") of the resource would you like to delete");
 
             try {
                 index = parseInt(indexString);
@@ -85,4 +85,19 @@ public class Shell
         }
     }
 
+    public boolean getDeleteChildrenFromUser() throws ExitException
+    {
+        Boolean deleteChildren = null;
+
+        while (deleteChildren == null) {
+            String response = getConsole().readLine("Delete children (y/n)? ");
+            if ("y".equals(response)) {
+                deleteChildren = true;
+            } else if ("n".equals(response)) {
+                deleteChildren = false;
+            }
+        }
+
+        return deleteChildren;
+    }
 }

@@ -4,9 +4,11 @@ import com.bluemedora.exceptions.ExitException;
 import com.vmware.ops.api.client.Client;
 import com.vmware.ops.api.client.exceptions.AuthException;
 import com.vmware.ops.api.model.common.PageInfo;
+import com.vmware.ops.api.model.common.types.RelationshipType;
 import com.vmware.ops.api.model.resource.ResourceDto;
 import com.vmware.ops.api.model.resource.ResourceQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -66,6 +68,22 @@ public class SuiteApi
         }
 
         return matchingResources;
+    }
+
+    public static List<ResourceDto> getChildren(ApiConnectionInfo apiConnectionInfo, ResourceDto resourceDtoToDelete)
+    {
+        Client client = getClient(apiConnectionInfo.getHost(), apiConnectionInfo.getUsername(), apiConnectionInfo.getPassword());
+
+        PageInfo pageInfo = new PageInfo(0, 5000, 5000);
+        ResourceDto.ResourceRelationDto resourceDtoToDeleteDescendants;
+        List<ResourceDto> children = new ArrayList<ResourceDto>();
+        do {
+            resourceDtoToDeleteDescendants = client.resourcesClient().getRelationships(resourceDtoToDelete.getIdentifier(), RelationshipType.DESCENDANT, new PageInfo());
+            children.addAll(resourceDtoToDeleteDescendants.getResourceList());
+            pageInfo.setPage(pageInfo.getPage() + 1);
+        } while (resourceDtoToDeleteDescendants.getResourceList().size() == 5000);
+
+        return children;
     }
 }
 
