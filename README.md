@@ -17,22 +17,8 @@ ping vrealize_server
 
 ## Installation
 
-1. Download the jar TODO: add link
+1. Download the [jar](https://www.dropbox.com/s/qthgfmcf74qcpgd/vrealize-resource-deleter-1.0.0.jar?dl=0)
 2. Copy the jar to a box with access to your VMware vRealize server
-
-or
-
-1. Clone this repository 
-    ```
-    git clone https://github.com/MarkArbogast/vRealize-Resource-Deleter.git
-    ```
-
-2. Make the jar 
-    ```
-    rake build:jar
-    ```
-
-3. Copy the jar to a box with access to your VMware vRealize server `scp vrealize-resource-deleter-1.0.0.jar admin@network_box:~`
 
 ## Usage
 
@@ -87,6 +73,7 @@ java -jar vrealize-resource-deleter-1.0.0.jar
 ## History
 
 * April 10, 2015 - Version 0.1.0 - Created project and README
+* July 19, 2015 - Version 1.0.0 - Version 1.0 complete; Supports resource and descendent deletion
 
 ## Credits
 
