@@ -17,20 +17,20 @@ ping vrealize_server
 
 ## Installation
 
-1. Download the [jar](https://www.dropbox.com/s/qthgfmcf74qcpgd/vrealize-resource-deleter-1.0.0.jar?dl=0)
+1. Download the [jar](https://www.dropbox.com/s/5vcc2cxb5463thp/vrealize-resource-deleter-1.0.1.jar?dl=0)
 2. Copy the jar to a box with access to your VMware vRealize server
 
 ## Usage
 
 ```
-java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+java -jar vrealize-resource-deleter-1.0.1.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
 ```
 
 There are three ways to specify the vRealize hostname, username, and password.
 
 * Provide them as arguments 
 ```
-java -jar vrealize-resource-deleter-1.0.0.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
+java -jar vrealize-resource-deleter-1.0.1.jar [-h vrealize_hostname] [-u vrealize_admin] [-p vrealize_password]
 ```
 
 or
@@ -46,7 +46,7 @@ or
 
 * Simply run the jar and enter the parameters as prompted (recommended if you don't want password to be visible or stored anywhere)
 ```
-java -jar vrealize-resource-deleter-1.0.0.jar
+java -jar vrealize-resource-deleter-1.0.1.jar
 ```
 
 ## Contributing
@@ -74,6 +74,7 @@ java -jar vrealize-resource-deleter-1.0.0.jar
 
 * April 10, 2015 - Version 0.1.0 - Created project and README
 * July 19, 2015 - Version 1.0.0 - Version 1.0 complete; Supports resource and descendent deletion
+* July 19, 2015 - Version 1.0.1 - Fix for bug when choosing not to delete descendents
 
 ## Credits
 
